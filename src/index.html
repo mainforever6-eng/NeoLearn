@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="main.js" defer></script>
+    <title>NeoLang</title>
+</head>
+<body>
+    <div class="page">
+        <div class="stripes"></div>
+
+        <!-- Неоморфная карточка приложения -->
+        <div class="card" id="app-card">
+
+            <!-- Заставка на время проверки сохранённого состояния -->
+            <div id="boot" class="boot" role="status" aria-live="polite">
+                <span class="boot__title">NeoLang</span>
+                <span class="boot__hint">Загрузка…</span>
+            </div>
+
+            <!-- Экран 1: Приветствие -->
+            <section class="screen intro-screen" data-screen="1">
+                <h1 class="mainf">Добро пожаловать в Smart Intelligence</h1>
+                <div class="description">
+                    <p>Smart Intelligence помогает изучать программирование на практике. Доступны курсы Rust (26 уроков), JavaScript (12 уроков) и C++ (20 уроков) с целями, примерами кода, советами, упражнениями и краткими конспектами. Уроки можно искать по тексту, а конспект — скачать в PDF (готовый файл на каждый урок).</p>
+                </div>
+                <button class="next-btn" data-next="2">Далее</button>
+            </section>
+
+            <!-- Экран 2: Удобный интерфейс -->
+            <section class="screen intro-screen" data-screen="2">
+                <h1 class="mainf">Удобный интерфейс</h1>
+                <div class="description">
+                    <p>Приложение построено в стиле неоморфизма с интеграцией Material Design 3. Мягкие объёмные элементы, приятные тени и адаптивная раскладка под любой размер экрана смартфона. Навигация интуитивно понятна: все основные функции находятся в двух касаниях.</p>
+                </div>
+                <div class="feature-preview">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-title">Неоморфизм</div>
+                        <div class="feature-text">Объёмные кнопки и карточки</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-title">Material 3</div>
+                        <div class="feature-text">Палитра и токены M3</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📐</div>
+                        <div class="feature-title">Адаптив</div>
+                        <div class="feature-text">Под любой экран телефона</div>
+                    </div>
+                </div>
+                <button class="next-btn" data-next="main">Начать обучение</button>
+            </section>
+
+            <!-- Основной экран приложения -->
+            <section class="screen mainpage" id="main-screen">
+                <div id="toppanel" class="mainpage__panel">
+                    <!-- Переключатель темы: солнце / луна -->
+                    <button id="theme-switch" class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Тёмная тема">
+                        <span class="ts-track" aria-hidden="true">
+                            <span class="ts-night"></span>
+                            <span class="ts-stars"><i class="ts-star"></i><i class="ts-star ts-star--l"></i></span>
+                            <span class="ts-cloud ts-cloud--b"></span><span class="ts-cloud ts-cloud--a"></span>
+                        </span>
+                        <span class="ts-thumb-wrap" aria-hidden="true">
+                            <span class="ts-thumb">
+                                <i class="ts-crater ts-crater--a"></i><i class="ts-crater ts-crater--b"></i><i class="ts-crater ts-crater--c"></i>
+                            </span>
+                        </span>
+                    </button>
+
+                    <div class="course-picker">
+                        <select id="course" aria-label="Выбор курса">
+                            <optgroup label="Доступные курсы">
+                                <option value="rust">Rust</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="c++">C++</option>
+                            </optgroup>
+                        </select>
+                        <svg class="course-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </div>
+                    <button
+                        id="accent-toggle"
+                        class="accent-toggle"
+                        type="button"
+                        aria-label="Выбрать акцентный цвет"
+                        aria-haspopup="dialog"
+                        aria-expanded="false"
+                    >
+                        <span class="accent-toggle__dot" aria-hidden="true"></span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="lesson-toolbar" class="lesson-toolbar">
+                    <label class="search-field">
+                        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <input id="lesson-search" type="search" placeholder="Найти урок..." autocomplete="off">
+                    </label>
+                    <span id="lesson-progress" class="lesson-progress">Загрузка…</span>
+                </div>
+
+                <!-- Список уроков: название + краткое описание, клик открывает урок -->
+                <div id="lesson-list-view" class="lesson-list-view">
+                    <div id="lesson-list" class="lesson-list" aria-label="Список уроков">
+                        <div class="lesson-empty">Загрузка уроков…</div>
+                    </div>
+                </div>
+
+                <!-- Детальный экран урока -->
+                <div id="lesson-detail-view" class="lesson-detail-view is-hidden">
+                    <div class="lesson-detail__top">
+                        <button id="back-to-list" class="back-btn" type="button">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                            </svg>
+                            <span>К урокам</span>
+                        </button>
+                        <span id="lesson-detail-progress" class="lesson-progress">—</span>
+                    </div>
+                    <div id="lessondiv" class="mainpage__lesson">
+                        <article id="lesson-card" class="lesson-card" aria-labelledby="lesson-title">
+                            <div class="lesson-empty">Загрузка уроков…</div>
+                        </article>
+                    </div>
+                </div>
+
+                <p id="lesson-status" class="sr-only" role="status" aria-live="polite"></p>
+
+                <nav id="bottommenu" class="mainpage__menu is-hidden" aria-label="Навигация по урокам">
+                    <button id="prev-lesson" class="mainpage__button" aria-label="Предыдущий урок">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                    </button>
+                    <button id="homebutton" class="mainpage__button" aria-label="В начало урока">
+                        <img src="assets/home-icon.svg" width="80%" height="80%" alt="Домой">
+                    </button>
+                    <button id="next-lesson" class="mainpage__button" aria-label="Следующий урок">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                    </button>
+                </nav>
+            </section>
+
+            <!-- Выбор акцентного цвета -->
+            <div
+                id="accent-overlay"
+                class="accent-overlay is-hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="accent-title"
+            >
+                <div class="accent-sheet">
+                    <header class="accent-sheet__head">
+                        <div>
+                            <h2 id="accent-title">Акцентный цвет</h2>
+                            <p>Material You подстроится под систему, или выберите свой оттенок.</p>
+                        </div>
+                        <button id="accent-close" class="accent-close" type="button" aria-label="Закрыть выбор акцента">×</button>
+                    </header>
+
+                    <button id="accent-auto" class="accent-auto" type="button" aria-pressed="false">
+                        <span class="accent-auto__icon" aria-hidden="true">A</span>
+                        <span class="accent-auto__text">
+                            <strong>Авто · Material You</strong>
+                            <small>Системная палитра через tauri m3</small>
+                        </span>
+                        <span class="accent-auto__check" aria-hidden="true">✓</span>
+                    </button>
+
+                    <div id="accent-presets" class="accent-presets" role="group" aria-label="Готовые акценты"></div>
+
+                    <label class="accent-custom">
+                        <span>Свой цвет</span>
+                        <span class="accent-custom__control">
+                            <input id="accent-color" type="color" value="#6750a4" aria-label="Свой акцентный цвет">
+                            <code id="accent-color-value">#6750A4</code>
+                        </span>
+                    </label>
+
+                    <div class="accent-preview" aria-hidden="true">
+                        <span class="accent-preview__badge">01</span>
+                        <span class="accent-preview__body">
+                            <strong>Предпросмотр</strong>
+                            <span>Номер урока и акцентные элементы</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+[package]
+name = "easylearn"
+version = "0.1.0"
+edition = "2021"
+description = "NeoLang — неоморфный интерфейс + Material Design 3"
+authors = ["max"]
+license = "MIT"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+ttf-parser = "0.19"
+
+[dependencies.tauri]
+version = "2.12"
+features = ["test"]
+
+[dependencies.tauri-plugin-m3]
+version = "0.3"
+
+[dependencies.tauri-plugin-store]
+version = "2.0"
+
+[lib]
+crate-type = ["staticlib", "cdylib", "rlib"]
