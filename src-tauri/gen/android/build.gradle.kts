@@ -16,6 +16,7 @@ allprojects {
     }
 }
 
-tasks.register<Delete>("clean") {
-    delete(rootProject.buildDir)
+tasks.register("clean").configure {
+    delete("build")
 }
+

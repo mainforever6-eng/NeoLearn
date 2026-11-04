@@ -1,5 +1,3 @@
-import java.io.File
-import java.io.FileInputStream
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -16,56 +14,6 @@ val tauriProperties = Properties().apply {
     }
 }
 
-// ---------------------------------------------------------------------------
-// Release signing.
-//
-// Credentials are read from <android-root>/keystore.properties (git-ignored):
-//
-//   storeFile=/absolute/or/relative/path/to/upload-keystore.jks
-//   storePassword=...
-//   keyAlias=upload
-//   keyPassword=...          # optional, defaults to storePassword
-//
-// If the file is missing, debug builds keep working and the release build is
-// left unsigned (a warning is printed for release tasks).
-// ---------------------------------------------------------------------------
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties().apply {
-    if (keystorePropertiesFile.exists()) {
-        FileInputStream(keystorePropertiesFile).use { load(it) }
-    }
-}
-
-fun keystoreProperty(name: String, fallback: String? = null): String =
-    keystoreProperties.getProperty(name)?.takeIf { it.isNotBlank() }
-        ?: fallback?.takeIf { it.isNotBlank() }
-        ?: throw GradleException(
-            "Missing property '$name' in ${keystorePropertiesFile.absolutePath}"
-        )
-
-val releaseStoreFile: File? = if (keystorePropertiesFile.exists()) {
-    val configuredPath = keystoreProperty("storeFile")
-    val candidate = File(configuredPath).let { if (it.isAbsolute) it else rootProject.file(configuredPath) }
-    if (!candidate.isFile) {
-        throw GradleException(
-            "Keystore file '${candidate.absolutePath}' referenced by " +
-                "'${keystorePropertiesFile.absolutePath}' does not exist."
-        )
-    }
-    candidate
-} else {
-    val buildingRelease = gradle.startParameter.taskNames.any {
-        it.contains("release", ignoreCase = true)
-    }
-    if (buildingRelease) {
-        logger.warn(
-            "keystore.properties not found at ${keystorePropertiesFile.absolutePath}: " +
-                "the release build will be unsigned."
-        )
-    }
-    null
-}
-
 android {
     compileSdk = 37
     namespace = "com.max.neolang"
@@ -76,22 +24,6 @@ android {
         targetSdk = 37
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
         versionName = tauriProperties.getProperty("tauri.android.versionName", "1.0")
-    }
-    signingConfigs {
-        releaseStoreFile?.let { keystoreFile ->
-            val storePasswordValue = keystoreProperty(
-                "storePassword",
-                keystoreProperties.getProperty("password"),
-            )
-            create("release") {
-                storeFile = keystoreFile
-                storePassword = storePasswordValue
-                keyAlias = keystoreProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
-                    ?.takeIf { it.isNotBlank() }
-                    ?: storePasswordValue
-            }
-        }
     }
     buildTypes {
         getByName("debug") {
@@ -107,7 +39,6 @@ android {
             }
         }
         getByName("release") {
-            signingConfig = signingConfigs.findByName("release")
             optimization {
                enable = true
             }

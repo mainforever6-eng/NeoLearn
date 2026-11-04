@@ -9,6 +9,7 @@
     "build": "tauri build"
   },
   "dependencies": {
+    "tauri": "^0.15.0",
     "tauri-plugin-m3": "^0.3.2"
   },
   "devDependencies": {
