@@ -89,7 +89,3 @@ npm run tauri ios build
 3. Зафиксируйте изменения: `git commit -m "Добавлена фича"`
 4. Отправьте ветку: `git push origin feature/my-feature`
 5. Откройте Pull Request
-
-## Лицензия
-
-Укажите лицензию проекта, например MIT.
